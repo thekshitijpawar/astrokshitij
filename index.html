@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kshitij Pawar - CV</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700;800&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==================== PROFILE SELECTION SCREEN ==================== -->
+  <div id="profile-screen" class="profile-container">
+    <div class="profile-logo">KSHITIJ PAWAR</div>
+    <div class="profile-middle">
+      <h1 class="profile-title">Who's watching?</h1>
+      <div class="profile-users">
+        <div class="profile-card">
+          <div class="avatar-wrapper">
+            <!-- Space/Astronaut themed avatar styling via CSS -->
+            <div class="astro-avatar">
+              <i class="fa-solid fa-user-astronaut"></i>
+            </div>
+          </div>
+          <span class="profile-name">Recruiter</span>
+        </div>
+      </div>
+      <button class="manage-profiles-btn">Manage Profiles</button>
+    </div>
+  </div>
+
+  <div id="intro-screen" class="intro-container hidden">
+    <div class="tudum-animation-wrapper">
+      <!-- Animated SVG drawing the Netflix Original N logo -->
+      <!-- Animated SVG drawing the KP logo -->
+      <svg class="tudum-letter-n" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+          <!-- Gradients to make the vertical ribbons look curved and shaded -->
+          <linearGradient id="left-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8a0407" />
+            <stop offset="30%" stop-color="#b9090b" />
+            <stop offset="100%" stop-color="#e50914" />
+          </linearGradient>
+          <linearGradient id="right-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#b9090b" />
+            <stop offset="100%" stop-color="#e50914" />
+          </linearGradient>
+          <filter id="diagonal-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="-2" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.85"/>
+          </filter>
+        </defs>
+        
+        <!-- C Vertical Stem (using animated K-stem transition) -->
+        <path class="kp-ribbon kp-k-stem" fill="url(#left-gradient)" d="M 15 10 L 27 10 L 27 90 L 15 90 Z" />
+        
+        <!-- C Top Bar (using animated K-upper transition) -->
+        <path class="kp-ribbon kp-k-upper" filter="url(#diagonal-shadow)" fill="#E50914" d="M 15 10 L 45 10 L 45 22 L 15 22 Z" />
+        
+        <!-- C Bottom Bar (using animated K-lower transition) -->
+        <path class="kp-ribbon kp-k-lower" filter="url(#diagonal-shadow)" fill="#E50914" d="M 15 78 L 45 78 L 45 90 L 15 90 Z" />
+        
+        <!-- V Left Stem (using animated P-stem transition) -->
+        <path class="kp-ribbon kp-p-stem" fill="url(#left-gradient)" d="M 52 10 L 64 10 L 70 90 L 58 90 Z" />
+        
+        <!-- V Right Stem (using animated P-loop transition with shadow overlay) -->
+        <path class="kp-ribbon kp-p-loop" filter="url(#diagonal-shadow)" fill="#E50914" d="M 80 10 L 68 10 L 62 90 L 74 90 Z" />
+      </svg>
+      <!-- The colorful light beams/stripes for the Netflix intro zoom -->
+      <div class="tudum-beams">
+        <div class="beam b1"></div>
+        <div class="beam b2"></div>
+        <div class="beam b3"></div>
+        <div class="beam b4"></div>
+        <div class="beam b5"></div>
+        <div class="beam b6"></div>
+        <div class="beam b7"></div>
+        <div class="beam b8"></div>
+        <div class="beam b9"></div>
+        <div class="beam b10"></div>
+        <div class="beam b11"></div>
+        <div class="beam b12"></div>
+        <div class="beam b13"></div>
+        <div class="beam b14"></div>
+        <div class="beam b15"></div>
+        <div class="beam b16"></div>
+        <div class="beam b17"></div>
+        <div class="beam b18"></div>
+      </div>
+      <div class="tudum-text">CURRICULUM VITAE</div>
+    </div>
+    <button id="skip-intro" class="skip-intro-btn">Skip Intro</button>
+  </div>
+
+  <!-- ==================== MAIN WEB APPLICATION ==================== -->
+  <div id="main-app" class="app-container hidden">
+    
+    <!-- NAVIGATION BAR -->
+    <nav id="navbar" class="nav-bar">
+      <div class="nav-left">
+        <span class="nav-logo">KSHITIJ PAWAR</span>
+        <ul class="nav-links">
+          <li><a href="#billboard-container">Introduction</a></li>
+          <li><a href="#row-research">Research</a></li>
+          <li><a href="#row-work">Experience</a></li>
+          <li><a href="#row-education">Education</a></li>
+          <li><a href="#row-achievements">Achievements</a></li>
+          <li><a href="#row-conferences">Talks</a></li>
+          <li><a href="#row-skills">Technical Skills</a></li>
+          <li><a href="#row-certificates">Certificates</a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="search-input" placeholder="Titles, skills, tools..." aria-label="Search CV">
+        </div>
+        <span class="nav-lang">Physics</span>
+        <i class="fa-solid fa-bell nav-icon"></i>
+        <div class="nav-profile">
+          <div class="nav-avatar">
+            <i class="fa-solid fa-user-astronaut"></i>
+          </div>
+          <i class="fa-solid fa-caret-down nav-caret"></i>
+          <div class="profile-dropdown">
+            <div class="dropdown-item"><strong>Kshitij Prakash Pawar</strong></div>
+            <div class="dropdown-item"><i class="fa-solid fa-envelope"></i> astrokshitijj@gmail.com</div>
+            <div class="dropdown-item"><i class="fa-brands fa-linkedin"></i> <a href="https://linkedin.com/in/thekshitijpawar" target="_blank">LinkedIn Profile</a></div>
+            <div class="dropdown-item"><i class="fa-brands fa-github"></i> <a href="https://github.com/thekshitijpawar" target="_blank">GitHub Profile</a></div>
+            <hr class="dropdown-divider">
+            <div class="dropdown-item sign-out-btn" onclick="location.reload()"><i class="fa-solid fa-right-from-bracket"></i> Sign out of portfolio</div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- BILLBOARD (HERO SECTION) -->
+    <section class="billboard-container" id="billboard-container">
+      <!-- Looping background video -->
+      <video id="billboard-video" class="billboard-video" autoplay loop muted playsinline>
+        <source src="assets/billboard_video.mp4" type="video/mp4">
+      </video>
+      <div class="billboard-vignette"></div>
+      <div class="billboard-content">
+        <div class="billboard-series-tag">
+          <svg class="billboard-n-svg" viewBox="0 0 100 100">
+            <path fill="#E50914" d="M 20 10 L 38 10 L 38 90 Q 29 86 20 90 Z" />
+            <path fill="#B9090B" d="M 62 10 L 80 10 L 80 90 Q 71 86 62 90 Z" />
+            <path fill="#E50914" d="M 20 10 L 38 10 L 80 90 L 62 90 Z" />
+          </svg>
+          <span class="series-txt">S E R I E S</span>
+        </div>
+        <h1 class="billboard-title">Kshitij Prakash Pawar</h1>
+        <div class="billboard-trending-tag">
+          <div class="top10-box">
+            <span class="t10-top">TOP</span>
+            <span class="t10-num">10</span>
+          </div>
+          <span class="trending-rank">#1 in Astrophysicists Today</span>
+        </div>
+        <div class="billboard-desc">
+          <p class="billboard-p">
+            I'm an astrophysicist working with Dr. Šarūnas Mikolaitis on software that figures out a star's properties just from its light. The method: generate synthetic spectra with Turbospectrum and MARCS model atmospheres, then let a χ² minimization routine hunt through the grid until it finds the closest match to the real, observed spectrum. In practice it's teaching a machine to recognize a star it's never seen before. I also work with Dr. María Benito, modeling the Milky Way's rotation curve with Gaia and APOGEE data, trying to pin down how dark matter is spread through the galaxy.
+          </p>
+          <p class="billboard-p">
+            The other half of my work is teaching. For three years now I've taught astronomy to over 1,000 students, Grades III through XI, across India and the UAE, with Navars Edutech. Every unit of theory gets paired with something you can actually do: a DIY kit, a live demo, a night out with a telescope. I trained a batch of students in asteroid detection using Astrometrica, and a few of them went on to spot potential candidates entirely on their own, still one of my favorite things that's come out of this job. I've mentored 150+ student projects for science exhibitions and spoken on science communication at SCAI (ASI) and MPCST's Mahakala symposium.
+          </p>
+        </div>
+        <div class="billboard-buttons">
+          <button class="billboard-btn play-btn" onclick="openIntroModal()">
+            <i class="fa-solid fa-play"></i> Play
+          </button>
+          <button class="billboard-btn info-btn" onclick="openIntroModal()">
+            <i class="fa-solid fa-circle-info"></i> More Info
+          </button>
+        </div>
+      </div>
+      <div class="billboard-controls-right">
+        <button class="mute-btn" id="billboard-mute-btn" aria-label="Mute/Unmute">
+          <i class="fa-solid fa-volume-xmark"></i>
+        </button>
+        <div class="billboard-rating-badge">ALL</div>
+      </div>
+    </section>
+
+    <main class="rows-container">
+      
+      <!-- Research Experience -->
+      <section class="movie-row" id="row-research">
+        <h2 class="row-title">Research Projects (Original Series)</h2>
+        <div class="row-slider">
+          <button class="slider-arrow arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="row-slider-inner">
+            <!-- JS populates cards here -->
+          </div>
+          <button class="slider-arrow arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <!-- Work Experience -->
+      <section class="movie-row" id="row-work">
+        <h2 class="row-title">Work Experience (Sci-Fi Dramas)</h2>
+        <div class="row-slider">
+          <button class="slider-arrow arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="row-slider-inner">
+            <!-- JS populates cards here -->
+          </div>
+          <button class="slider-arrow arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <!-- Education -->
+      <section class="movie-row" id="row-education">
+        <h2 class="row-title">Education (Highly Rated Docs)</h2>
+        <div class="row-slider">
+          <button class="slider-arrow arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="row-slider-inner">
+            <!-- JS populates cards here -->
+          </div>
+          <button class="slider-arrow arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <!-- Achievements -->
+      <section class="movie-row" id="row-achievements">
+        <h2 class="row-title">Achievements (Award Winners)</h2>
+        <div class="row-slider">
+          <button class="slider-arrow arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="row-slider-inner">
+            <!-- JS populates cards here -->
+          </div>
+          <button class="slider-arrow arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <!-- Conferences & Presentations -->
+      <section class="movie-row" id="row-conferences">
+        <h2 class="row-title">Conferences & Talks (Live Specials)</h2>
+        <div class="row-slider">
+          <button class="slider-arrow arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="row-slider-inner">
+            <!-- JS populates cards here -->
+          </div>
+          <button class="slider-arrow arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <!-- Technical Skills -->
+      <section class="movie-row" id="row-skills">
+        <h2 class="row-title">Technical Skills (Top Technologies)</h2>
+        <div class="row-slider">
+          <button class="slider-arrow arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="row-slider-inner">
+            <!-- JS populates cards here -->
+          </div>
+          <button class="slider-arrow arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <!-- Certificates Row -->
+      <section class="movie-row" id="row-certificates">
+        <h2 class="row-title">Course Certificates (Trending Releases)</h2>
+        <div class="row-slider">
+          <button class="slider-arrow arrow-left" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="row-slider-inner">
+            <!-- JS populates cards here -->
+          </div>
+          <button class="slider-arrow arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <div class="footer-socials">
+        <a href="mailto:astrokshitijj@gmail.com" target="_blank" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://linkedin.com/in/thekshitijpawar" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://github.com/thekshitijpawar" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+      <div class="footer-copyright">
+        <p>© 2026 Kshitij Prakash Pawar portfolio. All rights reserved in the Galaxy.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ==================== DETAILS MODAL OVERLAY ==================== -->
+  <div id="detail-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button class="modal-close" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+      
+      <!-- Modal Hero Header -->
+      <div class="modal-hero">
+        <div class="modal-hero-vignette"></div>
+        <div class="modal-hero-title-container">
+          <h2 class="modal-title">Milky Way Dynamical Model</h2>
+          <div class="modal-actions">
+            <button class="modal-play-btn"><i class="fa-solid fa-play"></i> Read Work</button>
+            <button class="modal-circle-btn" aria-label="Add to My List"><i class="fa-solid fa-plus"></i></button>
+            <button class="modal-circle-btn" aria-label="Like"><i class="fa-solid fa-thumbs-up"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Body Content -->
+      <div class="modal-body">
+        <div class="modal-body-left">
+          <!-- Meta data row -->
+          <div class="modal-metadata">
+            <span class="modal-match">99% Match</span>
+            <span class="modal-year">Oct 2023 - Present</span>
+            <span class="modal-rating">A</span>
+            <span class="modal-badge-hd">HD</span>
+            <span class="modal-badge-cc">CC</span>
+          </div>
+          <!-- Institution / Employer -->
+          <h3 class="modal-institution">Tartu Observatory, Estonia</h3>
+          <p class="modal-pi" style="margin-bottom: 20px; font-size: 15px; color: #b3b3b3;"></p>
+          
+          <!-- Key Points / Details (CV Bullets) -->
+          <div class="modal-description">
+            <h4 class="section-heading">Detailed Experience</h4>
+            <ul class="modal-bullets-list">
+              <!-- Loaded via JavaScript -->
+            </ul>
+          </div>
+        </div>
+
+        <div class="modal-body-right">
+          <div class="sidebar-item">
+            <span class="sidebar-label">Cast:</span>
+            <span class="sidebar-val cast-list">Dr. María Benito, Kshitij Pawar</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-label">Genres:</span>
+            <span class="sidebar-val genre-list">Stellar Populations, Galactic Dynamics</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-label">Tags:</span>
+            <span class="sidebar-val tag-list">APOGEE, Gaia Tools, GMM, Python</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
