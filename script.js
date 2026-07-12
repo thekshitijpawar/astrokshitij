@@ -148,7 +148,7 @@ const cvData = {
       date: "May 2023",
       match: "CGPA 7.89",
       rating: "ALL",
-      tags: ["Astrophysics", "Cosmology", "Quantum Mechanics", "Statistical Physics"],
+      tags: [],
       bullets: [
         "Master of Science degree focusing on Astronomy & Astrophysics and Cosmology.",
         "CGPA: 7.89 / 10",
@@ -163,10 +163,10 @@ const cvData = {
       date: "May 2021",
       match: "CGPA 9.60",
       rating: "ALL",
-      tags: ["Solid State Physics", "Optics", "Electrodynamics", "Thermodynamics"],
+      tags: [],
       bullets: [
         "Bachelor of Science degree in Physics.",
-        "CGPA: 9.6 / 10 (Outstanding academic performance)",
+        "CGPA: 9.6 / 10",
         "Relevant Coursework: Classical Mechanics, Optics & Thermodynamics, Nuclear Physics & Quantum Mechanics, Mathematical Physics, Electronics & Electricity, Applied Physics, Statistical Physics, Solid State Physics, Atomic & Molecular Physics, Electrodynamics, Special Theory of Relativity."
       ],
       image: "assets/bsc_graduation_final.png"
@@ -493,9 +493,16 @@ function openModal(item) {
 
   modalCast.innerHTML = item.pi ? `${item.pi}, Kshitij Pawar` : "Kshitij Prakash Pawar";
   
-  if (item.tags) {
+  const genresContainer = modal.querySelector(".genre-list").closest(".sidebar-item");
+  const tagsContainer = modal.querySelector(".tag-list").closest(".sidebar-item");
+  if (item.tags && item.tags.length > 0) {
+    genresContainer.style.display = "block";
+    tagsContainer.style.display = "block";
     modalGenres.innerHTML = item.tags.slice(0, 3).join(", ");
     modalTags.innerHTML = item.tags.join(", ");
+  } else {
+    genresContainer.style.display = "none";
+    tagsContainer.style.display = "none";
   }
 
   modal.classList.add("show");
