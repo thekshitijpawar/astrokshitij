@@ -154,7 +154,7 @@ const cvData = {
         "CGPA: 7.89 / 10",
         "Relevant Coursework: Classical Mechanics, Astronomy & Astrophysics, Cosmology, Statistical Physics, Electromagnetism & Special Theory of Relativity, Introduction to Probability, Nuclear & Particle Physics, Optics, Quantum Mechanics."
       ],
-      image: "assets/msc_graduation.png"
+      image: "assets/msc_graduation_new.png"
     },
     {
       id: "edu-bsc",
@@ -169,7 +169,7 @@ const cvData = {
         "CGPA: 9.6 / 10 (Outstanding academic performance)",
         "Relevant Coursework: Classical Mechanics, Optics & Thermodynamics, Nuclear Physics & Quantum Mechanics, Mathematical Physics, Electronics & Electricity, Applied Physics, Statistical Physics, Solid State Physics, Atomic & Molecular Physics, Electrodynamics, Special Theory of Relativity."
       ],
-      image: "assets/bsc_graduation.png"
+      image: "assets/bsc_graduation_new.png"
     }
   ],
   achievements: [
