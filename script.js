@@ -169,7 +169,7 @@ const cvData = {
         "CGPA: 9.6 / 10 (Outstanding academic performance)",
         "Relevant Coursework: Classical Mechanics, Optics & Thermodynamics, Nuclear Physics & Quantum Mechanics, Mathematical Physics, Electronics & Electricity, Applied Physics, Statistical Physics, Solid State Physics, Atomic & Molecular Physics, Electrodynamics, Special Theory of Relativity."
       ],
-      image: "assets/bsc_graduation_new.png"
+      image: "assets/bsc_graduation_final.png"
     }
   ],
   achievements: [
