@@ -396,13 +396,13 @@ window.openIntroModal = function() {
 // Carousel Rows Rendering
 function renderAllRows() {
   const categories = [
-    { key: "research", title: "Research Projects (Original Series)", id: "row-research" },
-    { key: "work", title: "Work Experience (Sci-Fi Dramas)", id: "row-work" },
-    { key: "education", title: "Education (Highly Rated Docs)", id: "row-education" },
-    { key: "achievements", title: "Achievements (Award Winners)", id: "row-achievements" },
-    { key: "conferences", title: "Conferences & Talks (Live Specials)", id: "row-conferences" },
-    { key: "skills", title: "Technical Skills (Top Technologies)", id: "row-skills" },
-    { key: "certificates", title: "Course Certificates (Trending Releases)", id: "row-certificates" }
+    { key: "research", title: "Research Projects", id: "row-research" },
+    { key: "work", title: "Work Experience", id: "row-work" },
+    { key: "education", title: "Education", id: "row-education" },
+    { key: "achievements", title: "Achievements", id: "row-achievements" },
+    { key: "conferences", title: "Conferences & Talks", id: "row-conferences" },
+    { key: "skills", title: "Technical Skills", id: "row-skills" },
+    { key: "certificates", title: "Course Certificates", id: "row-certificates" }
   ];
 
   categories.forEach(cat => {
