@@ -420,8 +420,6 @@ function renderAllRows() {
       card.dataset.id = item.id;
       card.dataset.category = cat.key;
       
-      const tagBadges = item.tags.slice(0, 3).map(tag => `<span>${tag}</span>`).join(" • ");
-
       // Add bottom status labels (e.g., "New Episode") on the cards
       let bottomLabel = "";
       if (cat.key === "research" && index === 0) {
@@ -448,7 +446,6 @@ function renderAllRows() {
               <span class="rating">${item.rating}</span>
               <span class="date">${item.date}</span>
             </p>
-            <p class="hover-tags">${tagBadges}</p>
           </div>
         </div>
       `;
@@ -472,8 +469,6 @@ function openModal(item) {
   const modalPi = modal.querySelector(".modal-pi");
   const modalBullets = modal.querySelector(".modal-bullets-list");
   const modalCast = modal.querySelector(".cast-list");
-  const modalGenres = modal.querySelector(".genre-list");
-  const modalTags = modal.querySelector(".tag-list");
 
   modalHero.style.backgroundImage = `linear-gradient(to top, #181818 0%, rgba(24, 24, 24, 0) 50%, rgba(24, 24, 24, 0.7) 100%), url('${item.image}')`;
   modalTitle.textContent = item.title;
@@ -492,18 +487,6 @@ function openModal(item) {
   modalBullets.innerHTML = item.bullets.map(b => `<li>${b}</li>`).join("");
 
   modalCast.innerHTML = item.pi ? `${item.pi}, Kshitij Pawar` : "Kshitij Prakash Pawar";
-  
-  const genresContainer = modal.querySelector(".genre-list").closest(".sidebar-item");
-  const tagsContainer = modal.querySelector(".tag-list").closest(".sidebar-item");
-  if (item.tags && item.tags.length > 0) {
-    genresContainer.style.display = "block";
-    tagsContainer.style.display = "block";
-    modalGenres.innerHTML = item.tags.slice(0, 3).join(", ");
-    modalTags.innerHTML = item.tags.join(", ");
-  } else {
-    genresContainer.style.display = "none";
-    tagsContainer.style.display = "none";
-  }
 
   modal.classList.add("show");
   document.body.style.overflow = "hidden";
