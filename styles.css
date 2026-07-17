@@ -1770,3 +1770,333 @@ a {
 #detail-modal[data-id="work-navars"] .modal-hero {
   background-position: center 38% !important;
 }
+
+/* ==========================================================================
+   10. BILLBOARD PARAGRAPH TOGGLE & CUSTOM FULLSCREEN VIDEO PLAYER
+   ========================================================================== */
+
+.billboard-p-second {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+              max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              margin 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.billboard-p-second.expanded {
+  opacity: 1;
+  max-height: 500px;
+  margin-top: 10px !important;
+}
+
+.video-player-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.video-player-container.hidden {
+  display: none !important;
+}
+
+#player-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #000;
+}
+
+/* Controls overlay */
+.player-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,0.7) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
+  z-index: 2010;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  pointer-events: auto;
+}
+
+/* When controls are hidden */
+.player-controls.hide-controls {
+  opacity: 0;
+  pointer-events: none;
+  cursor: none;
+}
+
+/* Header bar */
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.player-back-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.player-back-btn:hover {
+  transform: scale(1.15);
+  color: var(--primary-color);
+}
+
+.player-video-title {
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+
+/* Large Center Play Button */
+.player-center-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 2.2rem;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Center play trigger flash animation */
+.player-center-play.flash {
+  animation: flashPlayPause 0.5s ease-out forwards;
+}
+
+@keyframes flashPlayPause {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+}
+
+/* Bottom Controls */
+.player-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+/* Seek Bar / Timeline */
+.player-timeline-container {
+  width: 100%;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.player-timeline {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  transition: height 0.1s ease;
+}
+
+.player-timeline-container:hover .player-timeline {
+  height: 8px;
+}
+
+.player-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+.player-progress-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  display: none;
+}
+
+.player-timeline-container:hover .player-progress-hover {
+  display: block;
+}
+
+.player-timeline-handle {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 14px;
+  height: 14px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  transition: transform 0.1s ease;
+}
+
+.player-timeline-container:hover .player-timeline-handle {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Controls row layout */
+.player-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.player-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.player-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.1s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-btn:hover {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.player-btn:active {
+  transform: scale(0.95);
+}
+
+/* Volume Slider styling */
+.player-volume-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.player-volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  transition: width 0.2s ease;
+}
+
+.player-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.player-volume-slider::-webkit-slider-thumb:hover {
+  background: var(--primary-color);
+  transform: scale(1.2);
+}
+
+.player-volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* Time display styling */
+.player-time-display {
+  font-size: 0.95rem;
+  color: #e5e5e5;
+  font-family: var(--font-body);
+}
+
+.player-controls-right {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  /* Override existing media query to hide paragraph 2 in desktop media queries, since we handle it dynamically now */
+  .billboard-p:nth-child(2) {
+    display: block !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .player-header {
+    font-size: 1rem;
+  }
+  .player-back-btn {
+    font-size: 1.4rem;
+  }
+  .player-controls-left {
+    gap: 15px;
+  }
+  .player-btn {
+    font-size: 1.2rem;
+  }
+  .player-volume-slider {
+    width: 50px;
+  }
+  .player-time-display {
+    font-size: 0.8rem;
+  }
+}
+

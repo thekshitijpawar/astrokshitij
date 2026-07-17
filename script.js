@@ -112,30 +112,16 @@ const cvData = {
       image: "assets/slideshow/slide1.jpg"
     },
     {
-      id: "work-vijay",
+      id: "work-physics-tutor",
       title: "Physics Tutor",
-      institution: "Vijay Coaching Center",
-      date: "2021 - 2022",
-      match: "90% Match",
+      institution: "Vijay Coaching Center / Independent",
+      date: "2020 - 2022",
+      match: "92% Match",
       rating: "ALL",
-      tags: ["Physics", "Tutoring", "11th Grade", "Experimental Learning"],
+      tags: ["Physics", "Tutoring", "11th & 12th Grade", "Exam Prep", "Experiential Learning"],
       bullets: [
-        "Taught 11th-grade physics with an experiential and experimental approach to deepen conceptual understanding.",
-        "Encouraged critical thinking and problem-solving through practical experiences in a dynamic classroom."
-      ],
-      image: "assets/physics_tutor.jpg"
-    },
-    {
-      id: "work-freelance",
-      title: "Physics Tutor (Freelance)",
-      institution: "Independent",
-      date: "2020 - 2021",
-      match: "88% Match",
-      rating: "ALL",
-      tags: ["Physics", "Individualized Plan", "12th Grade", "Exam Prep"],
-      bullets: [
-        "Provided individualized instruction to 12th-grade students, customizing lesson plans for exam preparation and advanced concept mastery.",
-        "Helped students build confidence in problem-solving and theoretical understanding."
+        "<strong>11th Grade Physics Teacher, Vijay Coaching Center</strong><br>Taught physics to a batch of 10 eleventh grade students using an experiential and hands on approach that built strong conceptual understanding, resulting in every student scoring above 70. Designed and set question papers for regular tests, conducted them, and personally evaluated every answer sheet to track progress.",
+        "<strong>Private Tutor, 12th Grade Physics</strong><br>Delivered individualized instruction to a 12th grade student, covering the complete Maharashtra State Board physics syllabus over the academic year, resulting in a score of 85 out of 100 in the board exam. Tailored lesson plans to his learning pace, with focused preparation on exam heavy topics."
       ],
       image: "assets/physics_tutor.jpg"
     }
@@ -154,7 +140,7 @@ const cvData = {
         "CGPA: 7.89 / 10",
         "Relevant Coursework: Classical Mechanics, Astronomy & Astrophysics, Cosmology, Statistical Physics, Electromagnetism & Special Theory of Relativity, Introduction to Probability, Nuclear & Particle Physics, Optics, Quantum Mechanics."
       ],
-      image: "assets/msc_graduation_new.png"
+      image: "assets/astronomy_thumbnail.png"
     },
     {
       id: "edu-bsc",
@@ -169,7 +155,7 @@ const cvData = {
         "CGPA: 9.6 / 10",
         "Relevant Coursework: Classical Mechanics, Optics & Thermodynamics, Nuclear Physics & Quantum Mechanics, Mathematical Physics, Electronics & Electricity, Applied Physics, Statistical Physics, Solid State Physics, Atomic & Molecular Physics, Electrodynamics, Special Theory of Relativity."
       ],
-      image: "assets/bsc_graduation_final.png"
+      image: "assets/physics_thumbnail.png"
     }
   ],
   achievements: [
@@ -308,6 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAllRows();
   setupEventListeners();
   setupBillboardVideo();
+  initVideoPlayer();
 });
 
 // Profile Selection & Intro Animation
@@ -353,19 +340,26 @@ function setupProfileSelection() {
 
 // Billboard Rendering
 function renderBillboard() {
-  const b = cvData.billboard;
-  const playBtn = document.querySelector(".billboard-btn.play-btn");
-  const infoBtn = document.querySelector(".billboard-btn.info-btn");
+  const playBtn = document.getElementById("billboard-play-btn");
+  const infoBtn = document.getElementById("billboard-info-btn");
+  const secondP = document.querySelector(".billboard-p-second");
 
   if (playBtn) {
     playBtn.addEventListener("click", () => {
-      openModal(b);
+      playBillboardVideo();
     });
   }
 
   if (infoBtn) {
     infoBtn.addEventListener("click", () => {
-      openModal(b);
+      if (secondP) {
+        secondP.classList.toggle("expanded");
+        if (secondP.classList.contains("expanded")) {
+          infoBtn.innerHTML = `<i class="fa-solid fa-circle-info"></i> Less Info`;
+        } else {
+          infoBtn.innerHTML = `<i class="fa-solid fa-circle-info"></i> More Info`;
+        }
+      }
     });
   }
 }
@@ -488,6 +482,32 @@ function openModal(item) {
 
   modalCast.innerHTML = item.pi ? `${item.pi}, Kshitij Pawar` : "Kshitij Prakash Pawar";
 
+  // Bind play button inside details modal
+  const modalPlayBtn = modal.querySelector(".modal-play-btn");
+  if (modalPlayBtn) {
+    const newPlayBtn = modalPlayBtn.cloneNode(true);
+    modalPlayBtn.parentNode.replaceChild(newPlayBtn, modalPlayBtn);
+    
+    // If it's the billboard introduction, link it to playing the fullscreen video
+    if (!item.id || item.id === "billboard" || item === cvData.billboard) {
+      newPlayBtn.innerHTML = `<i class="fa-solid fa-play"></i> Play Video`;
+      newPlayBtn.addEventListener("click", () => {
+        closeModal();
+        playBillboardVideo();
+      });
+    } else {
+      newPlayBtn.innerHTML = `<i class="fa-solid fa-play"></i> Read Work`;
+      newPlayBtn.addEventListener("click", () => {
+        // Standard experience play interaction (e.g. scroll to project or alert details)
+        closeModal();
+        const targetEl = document.getElementById(item.id);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    }
+  }
+
   modal.classList.add("show");
   document.body.style.overflow = "hidden";
 }
@@ -597,5 +617,282 @@ function setupEventListeners() {
         row.style.display = "none";
       }
     });
+  });
+}
+
+// Custom Full-Screen Video Player Mechanics
+let playerControlsTimer;
+
+function initVideoPlayer() {
+  const container = document.getElementById("video-player-container");
+  if (!container) return;
+
+  const video = document.getElementById("player-video");
+  const backBtn = container.querySelector(".player-back-btn");
+  const playPauseBtn = container.querySelector(".play-pause-btn");
+  const rewindBtn = container.querySelector(".rewind-btn");
+  const forwardBtn = container.querySelector(".forward-btn");
+  const volumeBtn = container.querySelector(".volume-btn");
+  const volumeSlider = container.querySelector(".player-volume-slider");
+  const currentTimeText = container.querySelector(".player-current-time");
+  const durationText = container.querySelector(".player-duration");
+  const timelineContainer = container.querySelector(".player-timeline-container");
+  const progressBar = container.querySelector(".player-progress-bar");
+  const progressHover = container.querySelector(".player-progress-hover");
+  const timelineHandle = container.querySelector(".player-timeline-handle");
+  const fullscreenBtn = container.querySelector(".fullscreen-btn");
+  const controlsOverlay = container.querySelector(".player-controls");
+  const centerPlayBtn = container.querySelector(".player-center-play");
+  const billboardVideo = document.getElementById("billboard-video");
+
+  // Helper: Format Time (seconds to M:SS)
+  function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  }
+
+  // Toggle Play / Pause
+  function togglePlay() {
+    if (video.paused) {
+      video.play().then(() => {
+        playPauseBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+        centerPlayBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
+        flashCenterPlay();
+        showControls();
+      });
+    } else {
+      video.pause();
+      playPauseBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
+      centerPlayBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+      flashCenterPlay();
+      showControls();
+    }
+  }
+
+  function flashCenterPlay() {
+    centerPlayBtn.classList.remove("flash");
+    void centerPlayBtn.offsetWidth; // Trigger reflow
+    centerPlayBtn.classList.add("flash");
+  }
+
+  // Seek
+  function seekTo(e) {
+    const rect = timelineContainer.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    const seekTime = pos * video.duration;
+    if (!isNaN(seekTime)) {
+      video.currentTime = seekTime;
+      updateProgress();
+    }
+  }
+
+  // Hover Seek Preview
+  function handleHoverProgress(e) {
+    const rect = timelineContainer.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    const clampedPos = Math.max(0, Math.min(1, pos));
+    progressHover.style.width = `${clampedPos * 100}%`;
+  }
+
+  // Update progress bar & time text
+  function updateProgress() {
+    if (!video.duration) return;
+    const pct = (video.currentTime / video.duration) * 100;
+    progressBar.style.width = `${pct}%`;
+    timelineHandle.style.left = `${pct}%`;
+    currentTimeText.textContent = formatTime(video.currentTime);
+  }
+
+  // Update duration once metadata loaded
+  video.addEventListener("loadedmetadata", () => {
+    durationText.textContent = formatTime(video.duration);
+  });
+
+  // Time update event
+  video.addEventListener("timeupdate", updateProgress);
+
+  // Video end event
+  video.addEventListener("ended", () => {
+    closePlayer();
+  });
+
+  // Play Pause events
+  playPauseBtn.addEventListener("click", togglePlay);
+  centerPlayBtn.addEventListener("click", togglePlay);
+  video.addEventListener("click", togglePlay);
+
+  // Rewind & Forward 10s
+  rewindBtn.addEventListener("click", () => {
+    video.currentTime = Math.max(0, video.currentTime - 10);
+    updateProgress();
+    showControls();
+  });
+
+  forwardBtn.addEventListener("click", () => {
+    video.currentTime = Math.min(video.duration || 0, video.currentTime + 10);
+    updateProgress();
+    showControls();
+  });
+
+  // Volume control
+  let previousVolume = 0.8;
+  
+  function updateVolume(val) {
+    video.volume = val;
+    volumeSlider.value = val;
+    
+    if (val === 0) {
+      volumeBtn.innerHTML = `<i class="fa-solid fa-volume-xmark"></i>`;
+      video.muted = true;
+    } else if (val < 0.5) {
+      volumeBtn.innerHTML = `<i class="fa-solid fa-volume-low"></i>`;
+      video.muted = false;
+    } else {
+      volumeBtn.innerHTML = `<i class="fa-solid fa-volume-high"></i>`;
+      video.muted = false;
+    }
+  }
+
+  volumeSlider.addEventListener("input", (e) => {
+    updateVolume(parseFloat(e.target.value));
+    showControls();
+  });
+
+  volumeBtn.addEventListener("click", () => {
+    if (video.volume > 0) {
+      previousVolume = video.volume;
+      updateVolume(0);
+    } else {
+      updateVolume(previousVolume > 0 ? previousVolume : 0.8);
+    }
+    showControls();
+  });
+
+  // Seek bar event listeners
+  let isDragging = false;
+
+  timelineContainer.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    seekTo(e);
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (isDragging) seekTo(e);
+  });
+
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  timelineContainer.addEventListener("mousemove", handleHoverProgress);
+
+  // Fullscreen
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      container.requestFullscreen().catch(err => {
+        console.error("Error attempting to enable fullscreen:", err);
+      });
+      fullscreenBtn.innerHTML = `<i class="fa-solid fa-compress"></i>`;
+    } else {
+      document.exitFullscreen().catch(() => {});
+      fullscreenBtn.innerHTML = `<i class="fa-solid fa-expand"></i>`;
+    }
+    showControls();
+  }
+
+  fullscreenBtn.addEventListener("click", toggleFullscreen);
+  
+  // Listen for fullscreen changes to update icon style
+  document.addEventListener("fullscreenchange", () => {
+    if (document.fullscreenElement) {
+      fullscreenBtn.innerHTML = `<i class="fa-solid fa-compress"></i>`;
+    } else {
+      fullscreenBtn.innerHTML = `<i class="fa-solid fa-expand"></i>`;
+    }
+  });
+
+  // Controls Autohide logic
+  function showControls() {
+    controlsOverlay.classList.remove("hide-controls");
+    clearTimeout(playerControlsTimer);
+    if (!video.paused) {
+      playerControlsTimer = setTimeout(() => {
+        controlsOverlay.classList.add("hide-controls");
+      }, 3000);
+    }
+  }
+
+  container.addEventListener("mousemove", showControls);
+  container.addEventListener("mouseleave", () => {
+    if (!video.paused) {
+      controlsOverlay.classList.add("hide-controls");
+    }
+  });
+
+  // Back / Close
+  function closePlayer() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+    
+    video.pause();
+    container.classList.add("hidden");
+    document.body.style.overflow = "auto";
+    
+    // Resume billboard background video
+    if (billboardVideo) {
+      billboardVideo.play().catch(e => console.log("Background video play blocked:", e));
+    }
+  }
+
+  backBtn.addEventListener("click", closePlayer);
+
+  // Global function to open player
+  window.playBillboardVideo = function() {
+    container.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    
+    // Pause background video to save resources
+    if (billboardVideo) {
+      billboardVideo.pause();
+    }
+    
+    // Sync volume slider and button icon (default unmuted sound)
+    updateVolume(0.8);
+    video.currentTime = 0;
+    playPauseBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+    
+    video.play().then(() => {
+      showControls();
+    }).catch(err => {
+      console.log("Autoplay failed/blocked. Waiting for user interaction.", err);
+      playPauseBtn.innerHTML = `<i class="fa-solid fa-play"></i>`;
+      showControls();
+    });
+  };
+
+  // Keyboard Shortcuts
+  window.addEventListener("keydown", (e) => {
+    if (container.classList.contains("hidden")) return;
+
+    if (e.code === "Space") {
+      e.preventDefault();
+      togglePlay();
+    } else if (e.code === "ArrowLeft") {
+      e.preventDefault();
+      video.currentTime = Math.max(0, video.currentTime - 10);
+      updateProgress();
+      showControls();
+    } else if (e.code === "ArrowRight") {
+      e.preventDefault();
+      video.currentTime = Math.min(video.duration || 0, video.currentTime + 10);
+      updateProgress();
+      showControls();
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      closePlayer();
+    }
   });
 }
